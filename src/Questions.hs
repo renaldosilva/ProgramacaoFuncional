@@ -1,22 +1,24 @@
-module Questions (defaultResultQ1, findInstallments) where
+module Questions (defaultResult, findInstallments) where
+
+
+-- DefautlResult é o valor usando na sáida quando não há solução.
+defaultResult :: Int
+defaultResult = (-10) ^ 9
+
 
 -- Questão 1: Dado um array ordenado e um número x, encontre um par (a,b) de números pertencentes ao array tal que (a + b) se aproxime o máximo possível de x.
--- Obs.: defautlResult é o valor usando na sáida quando não há solução. Exemplo: array = [5, 12, 17], x = 4
-defaultResultQ1 :: Int
-defaultResultQ1 = (-10^9)
-
 
 findInstallments :: [Int] -> Int -> (Int, Int)
-findInstallments [] _ = (defaultResultQ1, defaultResultQ1)
-findInstallments numbers x = findInstallmentsAux1 numbers x defaultResultQ1 defaultResultQ1
+findInstallments [] _ = (defaultResult, defaultResult)
+findInstallments numbers x = findInstallmentsAux1 numbers x defaultResult defaultResult
 
 findInstallmentsAux1 :: [Int] -> Int -> Int -> Int -> (Int, Int)
 findInstallmentsAux1 [] _ installmentA installmentB = (installmentA, installmentB)
 findInstallmentsAux1 (a:as) x installmentA installmentB 
-    | currentInstallmentB /= defaultResultQ1 && currentSum <= x && currentSum > actualSum = findInstallmentsAux1 as x a currentInstallmentB
+    | currentInstallmentB /= defaultResult && currentSum <= x && currentSum > actualSum = findInstallmentsAux1 as x a currentInstallmentB
     | otherwise = findInstallmentsAux1 as x installmentA installmentB 
     where
-        currentInstallmentB = findInstallmentsAux2 as x a defaultResultQ1
+        currentInstallmentB = findInstallmentsAux2 as x a defaultResult
         currentSum = a + currentInstallmentB
         actualSum = installmentA + installmentB 
 

@@ -1,4 +1,4 @@
-import Questions (defaultResultQ1, findInstallments)
+import Questions (defaultResult, findInstallments)
 
 
 -- ###################### Testes Questão 1 ######################
@@ -25,7 +25,7 @@ testPositiveValueOutsideTheRightRange2 = do
 
 testPositiveValueOutsideTheLeftRange :: IO()
 testPositiveValueOutsideTheLeftRange = do
-    testModelQ1 [10, 15, 19] 9 (defaultResultQ1, defaultResultQ1)
+    testModelQ1 [10, 15, 19] 9 (defaultResult, defaultResult)
 
 testPositiveValueWithinLeftRange :: IO()
 testPositiveValueWithinLeftRange = do
@@ -37,7 +37,7 @@ testPositiveValueWithinRightRange = do
 
 testWithEmptyArray :: IO()
 testWithEmptyArray = do
-    testModelQ1 [] 5 (defaultResultQ1, defaultResultQ1)
+    testModelQ1 [] 5 (defaultResult, defaultResult)
 
 testNegativeValueOutsideTheRightRange :: IO()
 testNegativeValueOutsideTheRightRange = do
@@ -45,7 +45,7 @@ testNegativeValueOutsideTheRightRange = do
 
 testNegativeValueOutsideTheLeftRange :: IO()
 testNegativeValueOutsideTheLeftRange = do
-    testModelQ1 [-6, -3, -2] (-10) (defaultResultQ1, defaultResultQ1)
+    testModelQ1 [-6, -3, -2] (-10) (defaultResult, defaultResult)
 
 testNegativeValueWithinLeftRange :: IO()
 testNegativeValueWithinLeftRange = do
@@ -69,7 +69,6 @@ runTestsQ1 = do
     testNegativeValueWithinLeftRange
 
 -- ##############################################################
-
 
 main :: IO()
 main = do
