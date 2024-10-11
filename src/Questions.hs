@@ -1,4 +1,4 @@
-module Questions (defaultResult, findInstallments) where
+module Questions (defaultResult, findInstallments, floorCeil) where
 
 
 -- DefautlResult é o valor usando na sáida quando não há solução.
@@ -30,3 +30,37 @@ findInstallmentsAux2 (b:bs) x installmentA installmentB
     where
         sumAux1 = installmentA + b
         sumAux2 = installmentA + installmentB
+
+
+-- Questão 2: Encontrar floor e ceil de um número x dentro de um array a. O número x pode não estar no array a. O floor(x) 
+-- é o número do array a que é menor que x e que mais se aproxima de x (pode existir mais de um número menor que x,
+-- o floor é o maior deles). Dualmente, o ceil(x)  é o número do array a que é maior que x e que mais se aproxima de
+-- x (pode existir mais de um número maior do que x, o ceil é o menor deles).
+
+floorCeil :: [Int] -> Int -> (Int, Int)
+floorCeil [] _ = (defaultResult, defaultResult)
+floorCeil array x = (floor, ceil)
+    where
+        orderedArray = mySort array
+        floor = findFloor orderedArray x defaultResult
+        ceil = findCeil orderedArray x defaultResult
+
+-- Algoritmo de ordenação presente no material da disciplina de Programação Funcional.
+mySort :: [Int] -> [Int]
+mySort [] = []
+mySort (x:xs) = mySort ys ++ [x] ++ mySort zs
+    where
+        ys = [a | a <- xs, a <= x]
+        zs = [b | b <- xs, b > x]
+
+findFloor :: [Int] -> Int -> Int -> Int
+findFloor [] _ floor = floor
+findFloor (y:ys) x floor
+    | y < x = findFloor ys x y
+    | otherwise = findFloor ys x floor
+
+findCeil :: [Int] -> Int -> Int -> Int
+findCeil [] _ ceil = ceil
+findCeil (y:ys) x ceil
+    | y > x = y
+    | otherwise = findCeil ys x ceil
