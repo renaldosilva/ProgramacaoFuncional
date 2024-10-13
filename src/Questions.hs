@@ -99,7 +99,7 @@ findCeil (y:ys) x ceil
     e operações que não sejam acesso pelo índice.
 -}
 
--- OBS.: Nesta implementação o topo da pilha é considerado como o último elemento da lista sobrejacente.
+-- OBS.: Nesta implementação o topo da pilha é considerado como o primeiro elemento da lista sobrejacente.
 data Stack t = Stack [t] deriving (Eq, Show)
 
 {- 
@@ -116,7 +116,7 @@ isEmpty _ = False
 -}
 push :: Stack t -> t -> Stack t
 push (Stack []) value = Stack [value]
-push (Stack stack) value = Stack(stack ++ [value])
+push (Stack stack) value = Stack([value] ++ stack)
 
 {- 
     A função 'pop' remove o topo da pilha.
@@ -125,10 +125,7 @@ push (Stack stack) value = Stack(stack ++ [value])
 -}
 pop :: Stack t -> (Stack t, Maybe t)
 pop (Stack []) = (Stack [], Nothing)
-pop (Stack (x:[])) = (Stack [], Just x)
-pop (Stack (x:xs)) = (Stack ([x] ++ currentStack), value)
-    where
-        (Stack currentStack, value) = pop (Stack xs)
+pop (Stack (x:xs)) = (Stack xs, Just x)
     
 {-
     A funcão 'peek' retorna o valor do topo da pilha.    
@@ -136,20 +133,18 @@ pop (Stack (x:xs)) = (Stack ([x] ++ currentStack), value)
 -}
 peek :: Stack t -> Maybe t
 peek (Stack []) = Nothing
-peek (Stack (x:[])) = Just x
-peek (Stack (x:xs)) = peek (Stack xs)
+peek (Stack (x:_)) = Just x
 
 {-
     A função 'search' retorna a posição de um elemento na pilha, contando a partir do topo da pilha, com a contagem começando em 1.
     Se o elemento não estiver na pilha ou se a pilha estiver vazia, a função retorna -1.
 -}
--- Lembrete: Nesta implementação o topo da pilha é considerado como o último elemento da lista sobrejacente.
 search :: (Eq t) => Stack t -> t -> Int
 search (Stack []) _ = (-1)
-search (Stack stack) value = searchAux (Stack stack) value (length stack)
+search (Stack stack) value = searchAux (Stack stack) value 1
 
 searchAux :: (Eq t) => Stack t -> t -> Int -> Int
 searchAux (Stack []) _ _ = (-1)
 searchAux (Stack (x:xs)) value position
     | x == value = position
-    | otherwise = searchAux (Stack xs) value (position - 1)
+    | otherwise = searchAux (Stack xs) value (position + 1)

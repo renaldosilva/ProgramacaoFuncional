@@ -71,7 +71,7 @@ testPushWithPopulatedStack = do
     let stack = stackOfMultipleElements
     let value = 7
     let newStack = push stack value
-    let expectedStack = Stack [31, 11, 2, 25, 0, value]
+    let expectedStack = Stack [value, 0,25,2,11,31]
     let testStatus = getTestStatus expectedStack newStack
     printResultQ3V2 testPushName stack value expectedStack newStack testStatus
 
@@ -98,7 +98,7 @@ testPopWithPopulatedStack2 :: IO()
 testPopWithPopulatedStack2 = do
     let stack = stackOfMultipleElements
     let result = pop stack
-    let expectedResult = (Stack [31, 11, 2, 25], Just 0)
+    let expectedResult = (Stack [25,2,11,31], Just 0)
     let testStatus = getTestStatus expectedResult result
     printResultQ3V3 testPopName stack expectedResult result testStatus
 
