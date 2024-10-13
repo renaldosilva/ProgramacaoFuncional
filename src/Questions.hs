@@ -1,4 +1,15 @@
-module Questions (defaultResult, findInstallments, floorCeil) where
+module Questions (
+    defaultResult, 
+    findInstallments, 
+    floorCeil,
+    Stack(..),
+    isEmpty,
+    push,
+    pop,
+    peek,
+    search
+    ) where
+
 
 
 -- DefautlResult é o valor usando na sáida quando não há solução.
@@ -6,7 +17,14 @@ defaultResult :: Int
 defaultResult = (-10) ^ 9
 
 
--- Questão 1: Dado um array ordenado e um número x, encontre um par (a,b) de números pertencentes ao array tal que (a + b) se aproxime o máximo possível de x.
+
+-- QUESTÃO 1 #####################################################################################################################################################
+-- ###############################################################################################################################################################
+
+{-
+    Dado um array ordenado e um número x, encontre um par (a,b) de números 
+    pertencentes ao array tal que (a + b) se aproxime o máximo possível de x.
+-}
 
 findInstallments :: [Int] -> Int -> (Int, Int)
 findInstallments [] _ = (defaultResult, defaultResult)
@@ -32,10 +50,16 @@ findInstallmentsAux2 (b:bs) x installmentA installmentB
         sumAux2 = installmentA + installmentB
 
 
--- Questão 2: Encontrar floor e ceil de um número x dentro de um array a. O número x pode não estar no array a. O floor(x) 
--- é o número do array a que é menor que x e que mais se aproxima de x (pode existir mais de um número menor que x,
--- o floor é o maior deles). Dualmente, o ceil(x)  é o número do array a que é maior que x e que mais se aproxima de
--- x (pode existir mais de um número maior do que x, o ceil é o menor deles).
+
+-- QUESTÃO 2 #####################################################################################################################################################
+-- ###############################################################################################################################################################
+
+{-
+    Encontrar floor e ceil de um número x dentro de um array a. O número x pode não estar no array a. O floor(x) 
+    é o número do array a que é menor que x e que mais se aproxima de x (pode existir mais de um número menor que x,
+    o floor é o maior deles). Dualmente, o ceil(x)  é o número do array a que é maior que x e que mais se aproxima de
+    x (pode existir mais de um número maior do que x, o ceil é o menor deles).
+-}
 
 floorCeil :: [Int] -> Int -> (Int, Int)
 floorCeil [] _ = (defaultResult, defaultResult)
@@ -64,3 +88,68 @@ findCeil [] _ ceil = ceil
 findCeil (y:ys) x ceil
     | y > x = y
     | otherwise = findCeil ys x ceil
+
+
+
+-- QUESTÃO 3 #####################################################################################################################################################
+-- ###############################################################################################################################################################
+
+{- 
+    Implementar uma pilha e seus algoritmos em Haskell. Use a lista de Haskell como estrutura sobrejacente 
+    e operações que não sejam acesso pelo índice.
+-}
+
+-- OBS.: Nesta implementação o topo da pilha é considerado como o último elemento da lista sobrejacente.
+data Stack t = Stack [t] deriving (Eq, Show)
+
+{- 
+    A função 'isEmpty' verifica se a pilha está vazia.
+    Se a pilha estiver vazia o retorno é 'True', caso contrário o retorno é 'False'.
+-}
+isEmpty :: Stack t -> Bool
+isEmpty (Stack []) = True
+isEmpty _ = False
+
+{- 
+    A funcão 'push' adiciona um valor ao topo da pilha.
+    O retorno é uma nova pilha com o valor adicionado.
+-}
+push :: Stack t -> t -> Stack t
+push (Stack []) value = Stack [value]
+push (Stack stack) value = Stack(stack ++ [value])
+
+{- 
+    A função 'pop' remove o topo da pilha.
+    O retorno é uma tupla com a nova pilha e o valor removido.
+    Caso a pilha seja vazia, o retorno é uma tupla com uma pilha vazia e o valor 'Nothing'.
+-}
+pop :: Stack t -> (Stack t, Maybe t)
+pop (Stack []) = (Stack [], Nothing)
+pop (Stack (x:[])) = (Stack [], Just x)
+pop (Stack (x:xs)) = (Stack ([x] ++ currentStack), value)
+    where
+        (Stack currentStack, value) = pop (Stack xs)
+    
+{-
+    A funcão 'peek' retorna o valor do topo da pilha.    
+    Se o elemento não estiver na pilha ou se a pilha estiver vazia, a função retorna 'Nothing'.
+-}
+peek :: Stack t -> Maybe t
+peek (Stack []) = Nothing
+peek (Stack (x:[])) = Just x
+peek (Stack (x:xs)) = peek (Stack xs)
+
+{-
+    A função 'search' retorna a posição de um elemento na pilha, contando a partir do topo da pilha, com a contagem começando em 1.
+    Se o elemento não estiver na pilha ou se a pilha estiver vazia, a função retorna -1.
+-}
+-- Lembrete: Nesta implementação o topo da pilha é considerado como o último elemento da lista sobrejacente.
+search :: (Eq t) => Stack t -> t -> Int
+search (Stack []) _ = (-1)
+search (Stack stack) value = searchAux (Stack stack) value (length stack)
+
+searchAux :: (Eq t) => Stack t -> t -> Int -> Int
+searchAux (Stack []) _ _ = (-1)
+searchAux (Stack (x:xs)) value position
+    | x == value = position
+    | otherwise = searchAux (Stack xs) value (position - 1)
