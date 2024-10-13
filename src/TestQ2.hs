@@ -1,16 +1,10 @@
 module TestQ2 (runTestsQ2) where
 
 import Questions (defaultResult, floorCeil)
+import Util ( printResultQ2)
 
 
 -- ###################### Testes Questão 2 ######################
-
-printResultQ2 :: [Int] -> Int -> (Int, Int) -> (Int, Int) -> IO()
-printResultQ2 array x expectedResult result = do 
-    putStrLn $ "Input: arr[] = " ++ show array ++ ", x = " ++ show x
-    putStrLn $ "Expected result: floor = " ++ show (fst expectedResult) ++ ", ceil = " ++ show (snd expectedResult)
-    putStrLn $ "Result: floor = " ++ show (fst result) ++ ", ceil = " ++ show (snd result)
-    putStrLn ""
 
 testModelQ2 :: [Int] -> Int -> (Int, Int) -> IO()
 testModelQ2 array x expectedResult = do

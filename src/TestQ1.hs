@@ -1,16 +1,10 @@
 module TestQ1 (runTestsQ1) where
     
 import Questions (defaultResult, findInstallments)
+import Util (printResultQ1)
 
 
 -- ###################### Testes Questão 1 ######################
-
-printResultQ1 :: [Int] -> Int -> (Int, Int) -> (Int, Int) -> IO()
-printResultQ1 array x expectedResult result = do
-    putStrLn $ "Input: arr[] = " ++ show array ++ ", x = " ++ show x
-    putStrLn $ "Expected result: " ++ show expectedResult
-    putStrLn $ "Result: " ++ show result
-    putStrLn ""
 
 testModelQ1 :: [Int] -> Int -> (Int, Int) -> IO()
 testModelQ1 array x expectedResult = do

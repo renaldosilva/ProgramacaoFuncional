@@ -8,7 +8,13 @@ import Questions (
     peek,
     search
     )
-
+import Util (
+    printResultQ3V1,
+    printResultQ3V2,
+    printResultQ3V3,
+    printResultQ3V4,
+    printResultQ3V5
+    )
 
 -- ###################### Testes Questão 3 ######################
 
@@ -29,48 +35,6 @@ stackOfMultipleElements = stack
     where 
         new = emptyStack
         stack = push (push (push (push (push new 31) 11) 2) 25) 0
-
-printResultQ3V1 :: [Char] -> Stack Int -> Bool -> Bool -> IO()
-printResultQ3V1 testName stack expectedResult result = do
-    putStrLn testName
-    print stack
-    putStrLn $ "Expected result: " ++ show expectedResult
-    putStrLn $ "Result: " ++ show result
-    putStrLn ""
-
-printResultQ3V2 :: [Char] -> Stack Int -> Int -> Stack Int -> Stack Int -> IO()
-printResultQ3V2 testName stack value expectedResult result = do
-    putStrLn testName
-    print stack
-    putStrLn $ "Value: " ++ show value
-    putStrLn $ "Expected result: " ++ show expectedResult
-    putStrLn $ "Result: " ++ show result
-    putStrLn ""
-
-printResultQ3V3 :: [Char] -> Stack Int -> (Stack Int, Maybe Int) -> (Stack Int, Maybe Int) -> IO()
-printResultQ3V3 testName stack expectedResult result = do
-    putStrLn testName
-    print stack
-    putStrLn $ "Expected result: " ++ show expectedResult
-    putStrLn $ "Result: " ++ show result
-    putStrLn ""
-
-printResultQ3V4 :: [Char] -> Stack Int -> Maybe Int -> Maybe Int -> IO()
-printResultQ3V4 testName stack expectedResult result = do
-    putStrLn testName
-    print stack
-    putStrLn $ "Expected result: " ++ show expectedResult
-    putStrLn $ "Result: " ++ show result
-    putStrLn ""
-
-printResultQ3V5 :: [Char] -> Stack Int -> Int -> Maybe Int -> Maybe Int -> IO()
-printResultQ3V5 testName stack value expectedResult result = do
-    putStrLn testName
-    print stack
-    putStrLn $ "Value: " ++ show value
-    putStrLn $ "Expected result: " ++ show expectedResult
-    putStrLn $ "Result: " ++ show result
-    putStrLn ""
 
 testIsEmptyName :: [Char]
 testIsEmptyName = "\x1b[36mTest 'isEmpty'\x1b[0m"
