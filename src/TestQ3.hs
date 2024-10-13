@@ -9,6 +9,7 @@ import Questions (
     search
     )
 import Util (
+    getTestStatus,
     printResultQ3V1,
     printResultQ3V2,
     printResultQ3V3,
@@ -19,7 +20,7 @@ import Util (
 -- ###################### Testes Questão 3 ######################
 
 -- Pilha = [] | top = Nothing
-emptyStack :: Stack t
+emptyStack :: Stack Int
 emptyStack = Stack []
 
 -- Pilha = [3] | top = 3
@@ -43,13 +44,15 @@ testIsEmptyOnEmptyStack :: IO()
 testIsEmptyOnEmptyStack = do
     let stack = emptyStack
     let result = isEmpty stack
-    printResultQ3V1 testIsEmptyName stack True result
+    let testStatus = getTestStatus True result
+    printResultQ3V1 testIsEmptyName stack True result testStatus
 
 testIsEmptyWithPopulatedStack :: IO()
 testIsEmptyWithPopulatedStack = do
     let stack = stackOfMultipleElements
     let result = isEmpty stack
-    printResultQ3V1 testIsEmptyName stack False result
+    let testStatus = getTestStatus False result
+    printResultQ3V1 testIsEmptyName stack False result testStatus
 
 testPushName :: [Char]
 testPushName = "\x1b[36mTest 'push'\x1b[0m"
@@ -60,7 +63,8 @@ testPushOnEmptyStack = do
     let value = 3
     let newStack = push stack value
     let expectedStack = Stack [value]
-    printResultQ3V2 testPushName stack value expectedStack newStack
+    let testStatus = getTestStatus expectedStack newStack
+    printResultQ3V2 testPushName stack value expectedStack newStack testStatus
 
 testPushWithPopulatedStack :: IO()
 testPushWithPopulatedStack = do
@@ -68,31 +72,35 @@ testPushWithPopulatedStack = do
     let value = 7
     let newStack = push stack value
     let expectedStack = Stack [31, 11, 2, 25, 0, value]
-    printResultQ3V2 testPushName stack value expectedStack newStack
+    let testStatus = getTestStatus expectedStack newStack
+    printResultQ3V2 testPushName stack value expectedStack newStack testStatus
 
 testPopName :: [Char]
 testPopName = "\x1b[36mTest 'pop'\x1b[0m"
 
-testPopOnEmptyStack :: IO()
+testPopOnEmptyStack :: IO ()
 testPopOnEmptyStack = do
     let stack = emptyStack
     let result = pop stack
     let expectedResult = (Stack [], Nothing)
-    printResultQ3V3 testPopName stack expectedResult result
+    let testStatus = getTestStatus expectedResult result
+    printResultQ3V3 testPopName stack expectedResult result testStatus
 
 testPopWithPopulatedStack1 :: IO()
 testPopWithPopulatedStack1 = do
     let stack = stackOfOneElement
     let result = pop stack
     let expectedResult = (Stack [], Just 3)
-    printResultQ3V3 testPopName stack expectedResult result
+    let testStatus = getTestStatus expectedResult result
+    printResultQ3V3 testPopName stack expectedResult result testStatus
 
 testPopWithPopulatedStack2 :: IO()
 testPopWithPopulatedStack2 = do
     let stack = stackOfMultipleElements
     let result = pop stack
     let expectedResult = (Stack [31, 11, 2, 25], Just 0)
-    printResultQ3V3 testPopName stack expectedResult result
+    let testStatus = getTestStatus expectedResult result
+    printResultQ3V3 testPopName stack expectedResult result testStatus
 
 testPeekName :: [Char]
 testPeekName = "\x1b[36mTest 'peek'\x1b[0m"
@@ -102,14 +110,16 @@ testPeekOnEmptyStack = do
     let stack = emptyStack
     let result = peek stack
     let expectedResult = Nothing
-    printResultQ3V4 testPeekName stack expectedResult result
+    let testStatus = getTestStatus expectedResult result
+    printResultQ3V4 testPeekName stack expectedResult result testStatus
 
 testPeekWithPopulatedStack :: IO()
 testPeekWithPopulatedStack = do
     let stack = stackOfMultipleElements
     let result = peek stack
     let expectedResult = Just 0
-    printResultQ3V4 testPeekName stack expectedResult result
+    let testStatus = getTestStatus expectedResult result
+    printResultQ3V4 testPeekName stack expectedResult result testStatus
 
 testSearchName :: [Char]
 testSearchName = "\x1b[36mTest 'search'\x1b[0m"
@@ -120,7 +130,8 @@ testSearchOnEmptyStack = do
     let value = 4
     let result = Just (search stack value)
     let expectedResult = Just (-1)
-    printResultQ3V5 testSearchName stack value expectedResult result
+    let testStatus = getTestStatus expectedResult result
+    printResultQ3V5 testSearchName stack value expectedResult result testStatus
 
 testSearchWithPopulatedStack1 :: IO()
 testSearchWithPopulatedStack1 = do
@@ -128,7 +139,8 @@ testSearchWithPopulatedStack1 = do
     let value = 0
     let result = Just (search stack value)
     let expectedResult = Just 1
-    printResultQ3V5 testSearchName stack value expectedResult result
+    let testStatus = getTestStatus expectedResult result
+    printResultQ3V5 testSearchName stack value expectedResult result testStatus
 
 testSearchWithPopulatedStack2 :: IO()
 testSearchWithPopulatedStack2 = do
@@ -136,7 +148,8 @@ testSearchWithPopulatedStack2 = do
     let value = 25
     let result = Just (search stack value)
     let expectedResult = Just 2
-    printResultQ3V5 testSearchName stack value expectedResult result
+    let testStatus = getTestStatus expectedResult result
+    printResultQ3V5 testSearchName stack value expectedResult result testStatus
 
 testSearchWithPopulatedStack3 :: IO()
 testSearchWithPopulatedStack3 = do
@@ -144,7 +157,8 @@ testSearchWithPopulatedStack3 = do
     let value = 11
     let result = Just (search stack value)
     let expectedResult = Just 4
-    printResultQ3V5 testSearchName stack value expectedResult result
+    let testStatus = getTestStatus expectedResult result
+    printResultQ3V5 testSearchName stack value expectedResult result testStatus
 
 testSearchWithPopulatedStack4 :: IO()
 testSearchWithPopulatedStack4 = do
@@ -152,7 +166,8 @@ testSearchWithPopulatedStack4 = do
     let value = 19
     let result = Just (search stack value)
     let expectedResult = Just (-1)
-    printResultQ3V5 testSearchName stack value expectedResult result
+    let testStatus = getTestStatus expectedResult result
+    printResultQ3V5 testSearchName stack value expectedResult result testStatus
 
 runTestsQ3 :: IO()
 runTestsQ3 = do
