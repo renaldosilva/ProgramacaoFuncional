@@ -2,18 +2,18 @@ module TestQ3 (runTestsQ3) where
 
 import Questions (
     Stack(..),
-    isEmpty,
+    isEmptyStack,
     push,
     pop,
-    peek,
+    peekStack,
     search
     )
 import Util (
     getTestStatus,
-    printResultQ3V1,
-    printResultQ3V2,
-    printResultQ3V3,
-    printResultQ3V4,
+    printResultQ3Q4V1,
+    printResultQ3Q4V2,
+    printResultQ3Q4V3,
+    printResultQ3Q4V4,
     printResultQ3V5
     )
 
@@ -30,7 +30,7 @@ stackOfOneElement = stack
         new = emptyStack
         stack = push new 3
 
--- Pilha = [31, 11, 2, 25, 0] | top = 0
+-- Pilha = [0, 25, 2, 11, 31] | top = 0
 stackOfMultipleElements :: Stack Int
 stackOfMultipleElements = stack
     where 
@@ -38,21 +38,21 @@ stackOfMultipleElements = stack
         stack = push (push (push (push (push new 31) 11) 2) 25) 0
 
 testIsEmptyName :: [Char]
-testIsEmptyName = "\x1b[36mTest 'isEmpty'\x1b[0m"
+testIsEmptyName = "\x1b[36mTest 'isEmptyStack'\x1b[0m"
 
 testIsEmptyOnEmptyStack :: IO()
 testIsEmptyOnEmptyStack = do
     let stack = emptyStack
-    let result = isEmpty stack
+    let result = isEmptyStack stack
     let testStatus = getTestStatus True result
-    printResultQ3V1 testIsEmptyName stack True result testStatus
+    printResultQ3Q4V1 testIsEmptyName stack True result testStatus
 
 testIsEmptyWithPopulatedStack :: IO()
 testIsEmptyWithPopulatedStack = do
     let stack = stackOfMultipleElements
-    let result = isEmpty stack
+    let result = isEmptyStack stack
     let testStatus = getTestStatus False result
-    printResultQ3V1 testIsEmptyName stack False result testStatus
+    printResultQ3Q4V1 testIsEmptyName stack False result testStatus
 
 testPushName :: [Char]
 testPushName = "\x1b[36mTest 'push'\x1b[0m"
@@ -64,7 +64,7 @@ testPushOnEmptyStack = do
     let newStack = push stack value
     let expectedStack = Stack [value]
     let testStatus = getTestStatus expectedStack newStack
-    printResultQ3V2 testPushName stack value expectedStack newStack testStatus
+    printResultQ3Q4V2 testPushName stack value expectedStack newStack testStatus
 
 testPushWithPopulatedStack :: IO()
 testPushWithPopulatedStack = do
@@ -73,7 +73,7 @@ testPushWithPopulatedStack = do
     let newStack = push stack value
     let expectedStack = Stack [value, 0,25,2,11,31]
     let testStatus = getTestStatus expectedStack newStack
-    printResultQ3V2 testPushName stack value expectedStack newStack testStatus
+    printResultQ3Q4V2 testPushName stack value expectedStack newStack testStatus
 
 testPopName :: [Char]
 testPopName = "\x1b[36mTest 'pop'\x1b[0m"
@@ -84,7 +84,7 @@ testPopOnEmptyStack = do
     let result = pop stack
     let expectedResult = (Stack [], Nothing)
     let testStatus = getTestStatus expectedResult result
-    printResultQ3V3 testPopName stack expectedResult result testStatus
+    printResultQ3Q4V3 testPopName stack expectedResult result testStatus
 
 testPopWithPopulatedStack1 :: IO()
 testPopWithPopulatedStack1 = do
@@ -92,7 +92,7 @@ testPopWithPopulatedStack1 = do
     let result = pop stack
     let expectedResult = (Stack [], Just 3)
     let testStatus = getTestStatus expectedResult result
-    printResultQ3V3 testPopName stack expectedResult result testStatus
+    printResultQ3Q4V3 testPopName stack expectedResult result testStatus
 
 testPopWithPopulatedStack2 :: IO()
 testPopWithPopulatedStack2 = do
@@ -100,26 +100,26 @@ testPopWithPopulatedStack2 = do
     let result = pop stack
     let expectedResult = (Stack [25,2,11,31], Just 0)
     let testStatus = getTestStatus expectedResult result
-    printResultQ3V3 testPopName stack expectedResult result testStatus
+    printResultQ3Q4V3 testPopName stack expectedResult result testStatus
 
 testPeekName :: [Char]
-testPeekName = "\x1b[36mTest 'peek'\x1b[0m"
+testPeekName = "\x1b[36mTest 'peekStack'\x1b[0m"
 
 testPeekOnEmptyStack :: IO()
 testPeekOnEmptyStack = do
     let stack = emptyStack
-    let result = peek stack
+    let result = peekStack stack
     let expectedResult = Nothing
     let testStatus = getTestStatus expectedResult result
-    printResultQ3V4 testPeekName stack expectedResult result testStatus
+    printResultQ3Q4V4 testPeekName stack expectedResult result testStatus
 
 testPeekWithPopulatedStack :: IO()
 testPeekWithPopulatedStack = do
     let stack = stackOfMultipleElements
-    let result = peek stack
+    let result = peekStack stack
     let expectedResult = Just 0
     let testStatus = getTestStatus expectedResult result
-    printResultQ3V4 testPeekName stack expectedResult result testStatus
+    printResultQ3Q4V4 testPeekName stack expectedResult result testStatus
 
 testSearchName :: [Char]
 testSearchName = "\x1b[36mTest 'search'\x1b[0m"

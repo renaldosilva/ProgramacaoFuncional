@@ -2,14 +2,14 @@ module Util (
     getTestStatus,
     printResultQ1,
     printResultQ2,
-    printResultQ3V1,
-    printResultQ3V2,
-    printResultQ3V3,
-    printResultQ3V4,
+    printResultQ3Q4V1,
+    printResultQ3Q4V2,
+    printResultQ3Q4V3,
+    printResultQ3Q4V4,
     printResultQ3V5
 ) where
 
-import Questions (Stack)
+import Questions (Stack, Queue)
 
 
 getTestStatus :: (Eq t) => t -> t -> [Char]
@@ -33,38 +33,38 @@ printResultQ2 testName list x expectedResult result testStatus = do
     putStrLn $ "Test Status: " ++ testStatus
     putStrLn ""
 
-printResultQ3V1 :: [Char] -> Stack Int -> Bool -> Bool -> [Char] -> IO()
-printResultQ3V1 testName stack expectedResult result testStatus = do
+printResultQ3Q4V1 :: (Show t) => [Char] -> t -> Bool -> Bool -> [Char] -> IO()
+printResultQ3Q4V1 testName structure expectedResult result testStatus = do
     putStrLn testName
-    print stack
+    print structure
     putStrLn $ "Expected result: " ++ show expectedResult
     putStrLn $ "Result: " ++ show result
     putStrLn $ "Test Status: " ++ testStatus
     putStrLn ""
 
-printResultQ3V2 :: [Char] -> Stack Int -> Int -> Stack Int -> Stack Int -> [Char] -> IO()
-printResultQ3V2 testName stack value expectedResult result testStatus = do
+printResultQ3Q4V2 :: (Show t) => [Char] -> t -> Int -> t -> t -> [Char] -> IO()
+printResultQ3Q4V2 testName structure value expectedResult result testStatus = do
     putStrLn testName
-    print stack
+    print structure
     putStrLn $ "Value: " ++ show value
     putStrLn $ "Expected result: " ++ show expectedResult
     putStrLn $ "Result: " ++ show result
     putStrLn $ "Test Status: " ++ testStatus
     putStrLn ""
 
-printResultQ3V3 :: [Char] -> Stack Int -> (Stack Int, Maybe Int) -> (Stack Int, Maybe Int) -> [Char] ->IO()
-printResultQ3V3 testName stack expectedResult result testStatus = do
+printResultQ3Q4V3 :: (Show t) => [Char] -> t -> (t, Maybe Int) -> (t, Maybe Int) -> [Char] ->IO()
+printResultQ3Q4V3 testName structure expectedResult result testStatus = do
     putStrLn testName
-    print stack
+    print structure
     putStrLn $ "Expected result: " ++ show expectedResult
     putStrLn $ "Result: " ++ show result
     putStrLn $ "Test Status: " ++ testStatus
     putStrLn ""
 
-printResultQ3V4 :: [Char] -> Stack Int -> Maybe Int -> Maybe Int -> [Char] -> IO()
-printResultQ3V4 testName stack expectedResult result testStatus = do
+printResultQ3Q4V4 :: (Show t) => [Char] -> t -> Maybe Int -> Maybe Int -> [Char] -> IO()
+printResultQ3Q4V4 testName structure expectedResult result testStatus = do
     putStrLn testName
-    print stack
+    print structure
     putStrLn $ "Expected result: " ++ show expectedResult
     putStrLn $ "Result: " ++ show result
     putStrLn $ "Test Status: " ++ testStatus

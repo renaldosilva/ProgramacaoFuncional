@@ -3,11 +3,17 @@ module Questions (
     findInstallments, 
     floorCeil,
     Stack(..),
-    isEmpty,
+    isEmptyStack,
     push,
     pop,
-    peek,
-    search
+    peekStack,
+    search,
+    Queue(..),
+    isEmptyQueue,
+    enqueue,
+    dequeue,
+    peekQueue,
+    size
     ) where
 
 
@@ -103,12 +109,12 @@ findCeil (y:ys) x ceil
 data Stack t = Stack [t] deriving (Eq, Show)
 
 {- 
-    A função 'isEmpty' verifica se a pilha está vazia.
+    A função 'isEmptyStack' verifica se a pilha está vazia.
     Se a pilha estiver vazia o retorno é 'True', caso contrário o retorno é 'False'.
 -}
-isEmpty :: Stack t -> Bool
-isEmpty (Stack []) = True
-isEmpty _ = False
+isEmptyStack :: Stack t -> Bool
+isEmptyStack (Stack []) = True
+isEmptyStack _ = False
 
 {- 
     A funcão 'push' adiciona um valor ao topo da pilha.
@@ -128,12 +134,12 @@ pop (Stack []) = (Stack [], Nothing)
 pop (Stack (x:xs)) = (Stack xs, Just x)
     
 {-
-    A funcão 'peek' retorna o valor do topo da pilha.    
-    Se o elemento não estiver na pilha ou se a pilha estiver vazia, a função retorna 'Nothing'.
+    A funcão 'peekStack' retorna o valor do topo da pilha.    
+    Se a pilha estiver vazia, a função retorna 'Nothing'.
 -}
-peek :: Stack t -> Maybe t
-peek (Stack []) = Nothing
-peek (Stack (x:_)) = Just x
+peekStack :: Stack t -> Maybe t
+peekStack (Stack []) = Nothing
+peekStack (Stack (x:_)) = Just x
 
 {-
     A função 'search' retorna a posição de um elemento na pilha, contando a partir do topo da pilha, com a contagem começando em 1.
@@ -148,3 +154,54 @@ searchAux (Stack []) _ _ = (-1)
 searchAux (Stack (x:xs)) value position
     | x == value = position
     | otherwise = searchAux (Stack xs) value (position + 1)
+    
+
+
+-- QUESTÃO 4 #####################################################################################################################################################
+-- ###############################################################################################################################################################
+
+{-
+    Implementar uma Fila e seus algoritmos em Haskell. Use a lista de Haskell como estrutura sobrejacente e operações que não sejam acesso pelo índice.
+-}
+
+data Queue t = Queue [t] deriving (Eq, Show)
+
+{- 
+    A função 'isEmptyQueue' verifica se a fila está vazia.
+    Se a fila estiver vazia o retorno é 'True', caso contrário o retorno é 'False'.
+-}
+isEmptyQueue :: Queue t -> Bool
+isEmptyQueue (Queue []) = True
+isEmptyQueue _ = False
+
+{-
+    A função 'add' adiciona um elemento ao final da fila.
+    O retorno é uma nova fila com o valor adicionado.
+-}
+enqueue :: Queue t -> t -> Queue t
+enqueue (Queue []) value = Queue [value]
+enqueue (Queue queue) value = Queue (queue ++ [value])
+
+{-
+    A funcão 'dequeue' remove o primeiro elemento do início da fila.
+    O retorno é uma tupla com a nova fila e o valor removido.
+    Caso a fila seja vazia, o retorno é uma tupla com uma fila vazia e o valor 'Nothing'.
+-}
+dequeue :: Queue t -> (Queue t, Maybe t)
+dequeue (Queue []) = (Queue [], Nothing)
+dequeue (Queue (x:xs)) = (Queue xs, Just x)
+
+{-
+    A funcão 'peekQueue' retorna o elemento do início da fila.
+    Se a fila estiver vazia, a função retorna 'Nothing'.
+-}
+peekQueue :: Queue t -> Maybe t
+peekQueue (Queue []) = Nothing
+peekQueue (Queue (x:_)) = Just x
+
+{-
+    A função 'size' retorna o temanho da fila.
+-}
+size :: Queue t -> Int
+size (Queue []) = 0
+size (Queue (x:xs)) = 1 + size (Queue xs)
