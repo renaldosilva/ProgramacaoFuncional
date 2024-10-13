@@ -154,7 +154,7 @@ searchAux (Stack []) _ _ = (-1)
 searchAux (Stack (x:xs)) value position
     | x == value = position
     | otherwise = searchAux (Stack xs) value (position + 1)
-    
+
 
 
 -- QUESTÃO 4 #####################################################################################################################################################
@@ -205,3 +205,30 @@ peekQueue (Queue (x:_)) = Just x
 size :: Queue t -> Int
 size (Queue []) = 0
 size (Queue (x:xs)) = 1 + size (Queue xs)
+
+
+
+-- QUESTÃO 5 #####################################################################################################################################################
+-- ###############################################################################################################################################################
+
+{-
+    Um aluno é representado como uma estrutura contando matrícula, um primeiro nome, um sobrenome, período de ingresso e CRA.
+-}
+
+-- Letra a) Implemente a estrutura que representa um aluno.
+
+data Student = Student {
+    registration :: [Char],
+    name :: [Char],
+    surname :: [Char],
+    entryPeriod :: [Char],
+    cra :: Float
+    } deriving (Eq, Show)
+
+-- Letra b) Implemente uma função que calcula a média dos CRAs dos alunos (dispostos em uma lista) usando o operador de foldr (você não pode usar map).
+
+
+{-
+   Letra c) Implemente uma função que realiza o groupBy dos alunos por CRA. Ou seja, dada uma lista de alunos, a função retorna uma lista de pares 
+   (cra, [Aluno]), agrupando alunos com um mesmo CRA em pares cujo primeiro elemento é o CRA e o segundo é uma lista de alunos.
+-} 
