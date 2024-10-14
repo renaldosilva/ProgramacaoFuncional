@@ -15,8 +15,10 @@ module Questions (
     peekQueue,
     size,
     Student(..),
-    calculateAverageCra
+    calculateAverageCra,
+    groupByCra
     ) where
+import qualified Data.Set as Set
 
 
 
@@ -250,3 +252,21 @@ sumCRAs (Student _ _ _ _ cra) sum = sum + cra
    Letra c) Implemente uma função que realiza o groupBy dos alunos por CRA. Ou seja, dada uma lista de alunos, a função retorna uma lista de pares 
    (cra, [Aluno]), agrupando alunos com um mesmo CRA em pares cujo primeiro elemento é o CRA e o segundo é uma lista de alunos.
 -} 
+
+groupByCra :: [Student] -> [(Float, [Student])]
+groupByCra students = groups 
+    where
+        listCra = Set.toList (Set.fromList [cra | (Student _ _ _ _ cra) <- students])
+        groups = createGroups listCra students []
+
+createGroups :: [Float] -> [Student] -> [(Float, [Student])] -> [(Float, [Student])]
+createGroups [] _ groups = groups
+createGroups (targetCra:cras) students groups = createGroups cras students (groups ++ [group]) 
+    where
+        group = createGroup students (targetCra, [])
+
+createGroup :: [Student] -> (Float, [Student]) -> (Float, [Student])
+createGroup [] group = group
+createGroup ((Student registration name surname entryPeriod cra):students) (targetCra, studentsCra)
+    | cra == targetCra = createGroup students (targetCra, studentsCra ++ [Student registration name surname entryPeriod cra])
+    | otherwise = createGroup students (targetCra, studentsCra)

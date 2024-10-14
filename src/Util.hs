@@ -7,7 +7,8 @@ module Util (
     printResultQ3Q4V3,
     printResultQ3Q4V4,
     printResultQ3V5,
-    printResultQ5V1
+    printResultQ5V1,
+    printResultQ5V2
 ) where
 
 import Questions (
@@ -96,6 +97,30 @@ printResultQ5V1 testName students expectedResult result testStatus = do
     putStrLn $ "Result: " ++ show result
     putStrLn $ "Test Status: " ++ testStatus
     putStrLn ""
+
+printResultQ5V2 :: [Char] -> [Student] -> [(Float, [Student])] -> [(Float, [Student])] -> [Char] -> IO()
+printResultQ5V2 testName students expectedResult result testStatus = do
+    putStrLn testName
+    putStrLn "Students: "
+    putStrLn "---------------------------------------------------------------------------------"
+    printStudents students
+    putStrLn "---------------------------------------------------------------------------------"
+    putStrLn "Expected result: "
+    putStrLn "---------------------------------------------------------------------------------"
+    printGroupsOfStudentsByCRA expectedResult
+    putStrLn "---------------------------------------------------------------------------------"
+    putStrLn "Result: "
+    putStrLn "---------------------------------------------------------------------------------"
+    printGroupsOfStudentsByCRA result
+    putStrLn "---------------------------------------------------------------------------------"
+    putStrLn $ "Test Status: " ++ testStatus
+    putStrLn ""
+
+printGroupsOfStudentsByCRA :: [(Float, [Student])] -> IO()
+printGroupsOfStudentsByCRA [] = putStr ""
+printGroupsOfStudentsByCRA (group:groups) = do
+    print group
+    printGroupsOfStudentsByCRA groups
 
 printStudents :: [Student] -> IO()
 printStudents [] = putStr ""
