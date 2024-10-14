@@ -6,10 +6,15 @@ module Util (
     printResultQ3Q4V2,
     printResultQ3Q4V3,
     printResultQ3Q4V4,
-    printResultQ3V5
+    printResultQ3V5,
+    printResultQ5V1
 ) where
 
-import Questions (Stack, Queue)
+import Questions (
+    Stack, 
+    Queue, 
+    Student
+    )
 
 
 getTestStatus :: (Eq t) => t -> t -> [Char]
@@ -79,3 +84,21 @@ printResultQ3V5 testName stack value expectedResult result testStatus = do
     putStrLn $ "Result: " ++ show result
     putStrLn $ "Test Status: " ++ testStatus
     putStrLn ""
+
+printResultQ5V1 :: [Char] -> [Student] -> Float -> Float -> [Char] -> IO()
+printResultQ5V1 testName students expectedResult result testStatus = do
+    putStrLn testName
+    putStrLn "Students: "
+    putStrLn "---------------------------------------------------------------------------------"
+    printStudents students
+    putStrLn "---------------------------------------------------------------------------------"
+    putStrLn $ "Expected CRA avarage: " ++ show expectedResult
+    putStrLn $ "Result: " ++ show result
+    putStrLn $ "Test Status: " ++ testStatus
+    putStrLn ""
+
+printStudents :: [Student] -> IO()
+printStudents [] = putStr ""
+printStudents (student:students) = do
+    print student
+    printStudents students

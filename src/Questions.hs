@@ -13,12 +13,14 @@ module Questions (
     enqueue,
     dequeue,
     peekQueue,
-    size
+    size,
+    Student(..),
+    calculateAverageCra
     ) where
 
 
 
--- DefautlResult é o valor usando na sáida quando não há solução.
+-- DefautlResult é o valor usando na sáida quando não há solução nas questões 1 e 2.
 defaultResult :: Int
 defaultResult = (-10) ^ 9
 
@@ -227,6 +229,22 @@ data Student = Student {
 
 -- Letra b) Implemente uma função que calcula a média dos CRAs dos alunos (dispostos em uma lista) usando o operador de foldr (você não pode usar map).
 
+calculateAverageCra :: [Student] -> Float
+calculateAverageCra [] = 0
+calculateAverageCra students = avarage 
+    where
+        totalStudents = length students
+
+        {- Funcionamento do foldr neste caso:
+
+            foldr _ accumulator [] = accumulator
+            foldr sumCRAs accumulator (student:students) = sumCRAs student (foldr sumCRAs accumulator students)
+        -}
+        totalCRAs = foldr sumCRAs 0.0 students
+        avarage = fromIntegral (round ((totalCRAs / fromIntegral totalStudents) * 10)) / 10
+
+sumCRAs :: Student -> Float -> Float
+sumCRAs (Student _ _ _ _ cra) sum = sum + cra
 
 {-
    Letra c) Implemente uma função que realiza o groupBy dos alunos por CRA. Ou seja, dada uma lista de alunos, a função retorna uma lista de pares 

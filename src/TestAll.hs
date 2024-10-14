@@ -2,6 +2,7 @@ import TestQ1 (runTestsQ1)
 import TestQ2 (runTestsQ2)
 import TestQ3 (runTestsQ3)
 import TestQ4 (runTestsQ4)
+import TestQ5 (runTestsQ5)
 
 
 main :: IO()
@@ -28,4 +29,9 @@ main = do
     putStrLn ""
     runTestsQ4
     putStrLn "##############################################################"
-    
+    putStrLn ""
+    putStrLn ""
+    putStrLn "###################### Testes Questão 5 ######################"
+    putStrLn ""
+    runTestsQ5
+    putStrLn "##############################################################"
